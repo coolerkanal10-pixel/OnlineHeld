@@ -1,0 +1,11 @@
+[
+  {
+    "email": "test@beispiel.de",
+    "sentAt": "2026-11-10T22:33:49.511Z",
+    "series": [
+      "welcome",
+      "day2",
+      "day3"
+    ]
+  }
+]

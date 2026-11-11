@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Business Skalieren — Von 0$ auf 200$/Tag</title>
+  <meta name="description" content="Lerne, wie du ein Online-Geschäft aufbaust, das mit der Zeit auf 200$/Tag skaliert. Content, E-Mail-Liste, digitale Produkte, Automation.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="blog.html">Blog</a>
+        <a href="produkt.html">Produkt</a>
+        <a href="#start">Start</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>Dein Online-Geschäft.<br>Skaliere auf <span>200$/Tag</span></h1>
+      <p>Ein realistischer Plan: Content, E-Mail-Liste, digitale Produkte und Automation. Von 0$ auf ein Geschäft, das durchhalten kann — Schritt für Schritt, ohne Versprechungen.</p>
+      <a href="#start" class="cta">Jetzt Starter-Kit sichern</a>
+    </div>
+  </section>
+
+  <section class="section" id="start">
+    <div class="container">
+      <h2>Was du bekommst (kostenlos)</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">PDF Guide</span>
+          <h3>7-Tage-Challenge</h3>
+          <p>Von der Domain bis zum ersten Produkt — Tag für Tag, was du machst.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Checklisten</span>
+          <h3>Fehler-Checklist</h3>
+          <p>Die 5 größten Fehler, die Anfänger machen — und wie du sie vermeidest.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Templates</span>
+          <h3>Content + E-Mail Plan</h3>
+          <p>Fertige Vorlagen für Artikel, E-Mails und die Messung deiner Zahlen.</p>
+        </div>
+      </div>
+
+      <div class="lead-form" style="margin-top:50px;">
+        <h3 style="text-align:center;margin-bottom:16px;">Tritt der E-Mail-Liste bei — sofortiges Starter-Kit</h3>
+        <p style="text-align:center;color:var(--muted);margin-bottom:24px;">Kein Spam. Jede Woche ein Wert. Jederzeit kündbar.</p>
+        <form id="subscribeForm">
+          <input type="email" name="email" placeholder="deine@email.de" required>
+          <button type="submit" class="cta">Starter-Kit jetzt erhalten</button>
+          <p id="formMsg" style="margin-top:12px;min-height:20px;"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Wie das funktioniert</h2>
+      <div class="grid">
+        <div class="card"><h3>1. Content</h3><p>Artikel, die dein Publikum erreichen und Vertrauen aufbauen.</p></div>
+        <div class="card"><h3>2. E-Mail-Liste</h3><p>Dein eigenes Asset. Keine Plattform kann es dir wegnehmen.</p></div>
+        <div class="card"><h3>3. Digitales Produkt</h3><p>Einmal erstellen, unendlich verkaufen. 100% Margin.</p></div>
+        <div class="card"><h3>4. Automatisieren</h3><p>Systeme, die für dich arbeiten — während du schläfst.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Skalierbar — Online Business Plan. Keine Garantie für Einnahmen. Realistische Erwartungen.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('subscribeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const email = form.email.value.trim();
+      const msg = document.getElementById('formMsg');
+      const btn = form.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: 'email=' + encodeURIComponent(email) + '&source=website&leadMagnet=7-tage-challenge'
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span class="success">✓ ' + (data.message || 'Erfolgreich angemeldet!') + '</span>';
+          form.reset();
+        } else {
+          msg.innerHTML = '<span class="error">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span class="error">✗ Netzwerkfehler. Bitte erneut versuchen.</span>';
+      }
+      btn.disabled = false;
+      btn.textContent = 'Starter-Kit jetzt erhalten';
+    });
+  </script>
+</body>
+</html>

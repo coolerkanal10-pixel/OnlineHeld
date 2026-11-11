@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Passives Einkommen: Realistische Erwartungen vs. Mythen | Skalierbar</title>
+  <meta name="description" content="Passives Einkommen ist kein Mythos — aber auch kein Wundermittel. Die Realität.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="../index.html">Start</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0;">
+    <div class="container">
+      <h1 style="font-size:38px;">Passives Einkommen: Realistische Erwartungen vs. Mythen</h1>
+      <p style="color:var(--muted); margin-top:20px;">Passives Einkommen ist kein Mythos — aber auch kein Wundermittel. Die Realität.</p>
+    </div>
+  </section>
+
+  <article class="container" style="padding:40px 0; max-width:760px;">
+    <p>"Passives Einkommen" wird oft als der heilige Gral präsentiert: Setze einmal auf, verdiene für immer.</p><p>Die Realität ist weniger magisch — aber immer noch real.</p><h2>Die Mythen</h2><p><strong>Mythos 1:</strong> "Passives Einkommen ist einfach."</p><p>Wahr: Es ist anstrengend am Anfang und wird mit der Zeit leichter. Aber niemand verdient im Schlaf, ohne vorher gearbeitet zu haben.</p><p><strong>Mythos 2:</strong> "Du brauchst kein Geld."</p><p>Wahr: Du brauchst Zeit. Und oft ein bisschen Geld für Tools, Domain, Werbung. Aber: Weniger Geld als du denkst.</p><p><strong>Mythos 3:</strong> "Du brauchst eine große Audience."</p><p>Wahr: Eine kleine, engagierte Liste von 500 E-Mail-Abonnenten kann mehr wert sein als 50.000 Social-Media-Follower.</p><h2>Die Realität</h2><p>Passives Einkommen ist: Einmal investierte Arbeit, die immer wieder Geld bringt. Ein digitaler Kurs, den du einmal erstellst und 100-mal verkaufst. Ein E-Book, das monatlich verkauft wird. Ein Blog, der durch Werbung Geld generiert.</p><h2>Der erste Schritt</h2><p>Erstelle dein erstes digitales Produkt. Es muss nicht perfekt sein. Es muss existieren. Ein 10-seitiges PDF für 7$ ist ein besseres Produkt als ein perfektes Produkt, das nie fertig wird.</p><p><strong>Tritt unserer E-Mail-Liste bei für dein "Passives Einkommen Starter-Kit".</strong></p>
+    <div style="margin-top:40px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px;">
+      <h3>Kostenloses Starter-Kit</h3>
+      <p>Tritt der E-Mail-Liste bei und erhalte das 7-Tage-Challenge Starter-Kit als PDF.</p>
+      <form id="artSubscribe" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <input type="email" placeholder="deine@email.de" required style="flex:1; min-width:240px; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; color:#fff;">
+        <button type="submit" style="padding:12px 24px; background:var(--accent); border:none; border-radius:8px; color:#fff; cursor:pointer;">Starter-Kit</button>
+      </form>
+      <div id="msg" style="margin-top:16px; min-height:24px;"></div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container"><p>© 2026 Skalierbar — <a href="../index.html">Start</a> | <a href="../blog.html">Blog</a> | <a href="../produkt.html">Produkt</a></p></div>
+  </footer>
+
+  <script>
+    document.getElementById('artSubscribe').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const email = input.value.trim();
+      const msg = document.getElementById('msg');
+      if (!email || !/^.+@.+\..+$/.test(email)) {
+        msg.innerHTML = '<span style="color:#ff6b6b;">Gültige E-Mail-Adresse eingeben</span>';
+        return;
+      }
+      msg.innerHTML = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&source=article&leadMagnet=7-tage-challenge`
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span style="color:#2ecc71;">✓ Erfolgreich angemeldet! Check dein E-Mail-Postfach für das Starter-Kit.</span>';
+          input.disabled = true;
+        } else {
+          msg.innerHTML = '<span style="color:#ff6b6b;">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span style="color:#ff6b6b;">✗ Netzwerkfehler</span>';
+      }
+    });
+  </script>
+</body>
+</html>

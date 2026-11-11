@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Die 7-Tage-Challenge: Von 0$ auf dein erstes Online-Einkommen | Skalierbar</title>
+  <meta name="description" content="7 Tage, 7 Aufgaben. Der Plan, der dich vom Start bis zum ersten Produkt bringt.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="../index.html">Start</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0;">
+    <div class="container">
+      <h1 style="font-size:38px;">Die 7-Tage-Challenge: Von 0$ auf dein erstes Online-Einkommen</h1>
+      <p style="color:var(--muted); margin-top:20px;">7 Tage, 7 Aufgaben. Der Plan, der dich vom Start bis zum ersten Produkt bringt.</p>
+    </div>
+  </section>
+
+  <article class="container" style="padding:40px 0; max-width:760px;">
+    <p>Du willst ein Online-Geschäft starten, aber weißt nicht, wo du anfangen sollst?</p><p>Hier ist die Challenge. 7 Tage. Jeden Tag eine klare Aufgabe. Am Ende hast du ein Online-Geschäft, das das Potenzial hat, Geld zu machen.</p><h2>Tag 1: Nische + Domain</h2><ul><li>Finde ein Problem, das du lösen kannst</li><li>Bestelle eine Domain (10-15$/Jahr)</li><li><strong>Ergebnis:</strong> Eine Domain, die dein Geschichtsname ist</li></ul><h2>Tag 2: E-Mail-Liste</h2><ul><li>Lege eine E-Mail-Liste an (free Plan)</li><li>Erstelle einen Lead-Magneten (ein 10-seitiges PDF)</li><li><strong>Ergebnis:</strong> Eine E-Mail-Liste, die wachsen kann</li></ul><h2>Tag 3: Landungsseite</h2><ul><li>Baue eine einfache Landungsseite (Carrd, free)</li><li>Der Lead-Magnet wird gegen E-Mail-Adressen ausgetauscht</li><li><strong>Ergebnis:</strong> Eine Seite, die Abonnenten sammelt</li></ul><h2>Tag 4-5: Content</h2><ul><li>Schreibe 3 Artikel, die dein Publikum erreichen</li><li>Jeder Artikel endet mit einer CTA zur Liste</li><li><strong>Ergebnis:</strong> 3 Artikel, die Traffic und Abonnenten anziehen</li></ul><h2>Tag 6: Teilen</h2><ul><li>Teile jeden Artikel in 3 Communities</li><li>Kein Spam — lies die Regeln, biete echten Wert</li><li><strong>Ergebnis:</strong> Erste Sichtbarkeit und erste Abonnenten</li></ul><h2>Tag 7: Das erste Produkt</h2><ul><li>Erstelle ein kleines digitales Produkt (PDF, Vorlage, Mini-Kurs)</li><li>Baue eine einfache Verkaufsseite</li><li><strong>Ergebnis:</strong> Ein Produkt, das verkauft werden kann</li></ul><h2>Was passiert nach Tag 7?</h2><p>Du hast ein Online-Geschäft. Es hat vielleicht noch keine 200$/Tag. Aber es hat die Grundlage dafür. Und wenn du konsequent bleibst, wirst du eines Tages 200$/Tag und mehr erreichen.</p><p><strong>Tritt unserer E-Mail-Liste bei und erhalde das 7-Tage-Challenge Starter-Kit als PDF.</strong></p>
+    <div style="margin-top:40px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px;">
+      <h3>Kostenloses Starter-Kit</h3>
+      <p>Tritt der E-Mail-Liste bei und erhalte das 7-Tage-Challenge Starter-Kit als PDF.</p>
+      <form id="artSubscribe" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <input type="email" placeholder="deine@email.de" required style="flex:1; min-width:240px; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; color:#fff;">
+        <button type="submit" style="padding:12px 24px; background:var(--accent); border:none; border-radius:8px; color:#fff; cursor:pointer;">Starter-Kit</button>
+      </form>
+      <div id="msg" style="margin-top:16px; min-height:24px;"></div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container"><p>© 2026 Skalierbar — <a href="../index.html">Start</a> | <a href="../blog.html">Blog</a> | <a href="../produkt.html">Produkt</a></p></div>
+  </footer>
+
+  <script>
+    document.getElementById('artSubscribe').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const email = input.value.trim();
+      const msg = document.getElementById('msg');
+      if (!email || !/^.+@.+\..+$/.test(email)) {
+        msg.innerHTML = '<span style="color:#ff6b6b;">Gültige E-Mail-Adresse eingeben</span>';
+        return;
+      }
+      msg.innerHTML = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&source=article&leadMagnet=7-tage-challenge`
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span style="color:#2ecc71;">✓ Erfolgreich angemeldet! Check dein E-Mail-Postfach für das Starter-Kit.</span>';
+          input.disabled = true;
+        } else {
+          msg.innerHTML = '<span style="color:#ff6b6b;">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span style="color:#ff6b6b;">✗ Netzwerkfehler</span>';
+      }
+    });
+  </script>
+</body>
+</html>

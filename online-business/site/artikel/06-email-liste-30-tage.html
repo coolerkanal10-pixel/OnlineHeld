@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wie man eine E-Mail-Liste in 30 Tagen auf 1000 Abonnenten aufbaut | Skalierbar</title>
+  <meta name="description" content="Der 30-Tage-Plan: Von 0 auf 1.000 E-Mail-Abonnenten — Tag für Tag.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="../index.html">Start</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0;">
+    <div class="container">
+      <h1 style="font-size:38px;">Wie man eine E-Mail-Liste in 30 Tagen auf 1000 Abonnenten aufbaut</h1>
+      <p style="color:var(--muted); margin-top:20px;">Der 30-Tage-Plan: Von 0 auf 1.000 E-Mail-Abonnenten — Tag für Tag.</p>
+    </div>
+  </section>
+
+  <article class="container" style="padding:40px 0; max-width:760px;">
+    <p>Eine E-Mail-Liste von 1.000 Abonnenten ist der Unterschied zwischen "ich probiere mal" und "ich habe ein Geschäft".</p><p>Hier ist der Plan.</p><h2>Die Grundlagen</h2><ul><li><strong>Lead-Magnet:</strong> Ein免费 Wert, den du gegen eine E-Mail-Adresse austauschst (PDF, Guide, Checkliste, Tool)</li><li><strong>Landungsseite:</strong> Eine einfache Seite, die den Lead-Magneten präsentiert und die E-Mail-Abfrage zeigt</li><li><strong>E-Mail-Plattform:</strong> ConvertKit, Mailchimp, oder eine free Plattform</li></ul><h2>Der 30-Tage-Plan</h2><h3>Woche 1: Fundament</h3><ul><li>Tag 1-2: Lead-Magnet erstellen (ein 10-seitiges PDF)</li><li>Tag 3-4: Landungsseite bauen (Carrd, free)</li><li>Tag 5-7: Erste 50 Abonnenten durch direkte Ansprache (Freunde, Family, 3 Communities)</li></ul><h3>Woche 2: Skalierung</h3><ul><li>Tag 8-14: Täglich in 1-2 Communities posten (Reddit, Facebook-Gruppen, relevantes Forum)</li><li>Jeder Post endet mit: "Wenn du mehr wissen willst, tritt unserer Liste bei für [Lead-Magnet]"</li><li>Ziel: 200-300 Abonnenten</li></ul><h3>Woche 3: Content-Boost</h3><ul><li>Tag 15-21: 3 Artikel pro Woche schreiben, jeder endet mit CTA zur Liste</li><li>Teile die Artikel in Social Media</li><li>Ziel: 500-600 Abonnenten</li></ul><h3>Woche 4: Push</h3><ul><li>Tag 22-30: Giveaway, Free-Tool, oder exklusiver Content als Lock-in</li><li>Kooperation mit einem anderen Creator (Cross-Promotion)</li><li>Ziel: 1.000 Abonnenten</li></ul><h2>Die Wahrheit</h2><p>1.000 Abonnenten in 30 Tagen ist ambitioniert — aber möglich, wenn du konzentriert bist. Der Schlüssel ist: Jede Interaktion endet mit einer Einladung zur Liste.</p><p><strong>Tritt unserer E-Mail-Liste bei und erhalde dein "30-Tage E-Mail-Liste Starter-Kit".</strong></p>
+    <div style="margin-top:40px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px;">
+      <h3>Kostenloses Starter-Kit</h3>
+      <p>Tritt der E-Mail-Liste bei und erhalte das 7-Tage-Challenge Starter-Kit als PDF.</p>
+      <form id="artSubscribe" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <input type="email" placeholder="deine@email.de" required style="flex:1; min-width:240px; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; color:#fff;">
+        <button type="submit" style="padding:12px 24px; background:var(--accent); border:none; border-radius:8px; color:#fff; cursor:pointer;">Starter-Kit</button>
+      </form>
+      <div id="msg" style="margin-top:16px; min-height:24px;"></div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container"><p>© 2026 Skalierbar — <a href="../index.html">Start</a> | <a href="../blog.html">Blog</a> | <a href="../produkt.html">Produkt</a></p></div>
+  </footer>
+
+  <script>
+    document.getElementById('artSubscribe').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const email = input.value.trim();
+      const msg = document.getElementById('msg');
+      if (!email || !/^.+@.+\..+$/.test(email)) {
+        msg.innerHTML = '<span style="color:#ff6b6b;">Gültige E-Mail-Adresse eingeben</span>';
+        return;
+      }
+      msg.innerHTML = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&source=article&leadMagnet=7-tage-challenge`
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span style="color:#2ecc71;">✓ Erfolgreich angemeldet! Check dein E-Mail-Postfach für das Starter-Kit.</span>';
+          input.disabled = true;
+        } else {
+          msg.innerHTML = '<span style="color:#ff6b6b;">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span style="color:#ff6b6b;">✗ Netzwerkfehler</span>';
+      }
+    });
+  </script>
+</body>
+</html>

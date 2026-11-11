@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitale Produkte: Warum sie die beste Margin haben | Skalierbar</title>
+  <meta name="description" content="Einmal erstellen, unendlich verkaufen. Digitale Produkte haben die besten Margen.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="../index.html">Start</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0;">
+    <div class="container">
+      <h1 style="font-size:38px;">Digitale Produkte: Warum sie die beste Margin haben</h1>
+      <p style="color:var(--muted); margin-top:20px;">Einmal erstellen, unendlich verkaufen. Digitale Produkte haben die besten Margen.</p>
+    </div>
+  </section>
+
+  <article class="container" style="padding:40px 0; max-width:760px;">
+    <p>Wenn du ein Online-Geschäft aufbauen willst, das skalierbar ist, brauchst du digitale Produkte.</p><p>Warum? Weil die Margen unschlagbar sind.</p><h2>Die Margen im Vergleich</h2><p><strong>Produktart · Herstellungskosten · Verkaufspreis · Margin</strong></p><p><strong>Physisches Produkt · 15$ · 30$ · 50%</strong></p><p><strong>Service (Stundenbasis) · 25$/Stunde · 50$/Stunde · 50%</strong></p><p><strong>Digitales Produkt · 0$ · 27$ · 100%</strong></p><p>Ein digitaler Kurs, den du einmal erstellst, kann 100-mal, 1.000-mal verkauft werden — ohne dass du jedes Mal neu produzieren musst.</p><h2>Die 4 Arten digitaler Produkte, die funktionieren</h2><h3>1. PDF-Guide / E-Book</h3><p>Ein 10-20 seitiges PDF für 7-27$. Das ist der easiestste Einstieg. Erstelle es in Canva oder Google Docs.</p><h3>2. Kurs (Video oder Text)</h3><p>Ein Mini-Kurs mit 3-5 Modulen für 27-97$. Höhere Margin, mehr Aufwand — aber höhere Einnahmen.</p><h3>3. Vorlagen</h3><p>Eine Excel-Vorlage, eine Canva-Vorlage, eine E-Mail-Vorlage. Verkaufe sie für 9-49$. Jede Vorlage ist einmalige Arbeit, unendliche Verkäufe.</p><h3>4. Membership / Abonnement</h3><p>Monatliche Mitgliedschaft für 9-29$/Monat. Der heilige Gral: Einnahmen, die von selbst wachsen.</p><h2>Der erste Schritt</h2><p>Wähle ein Problem, das du lösen kannst. Erstelle ein kleines digitales Produkt, das dieses Problem löst. Verkaufe es. Verbessere es. Wiederhole.</p><p><strong>Tritt unserer E-Mail-Liste bei für dein "Digitale Produkte Starter-Kit".</strong></p>
+    <div style="margin-top:40px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px;">
+      <h3>Kostenloses Starter-Kit</h3>
+      <p>Tritt der E-Mail-Liste bei und erhalte das 7-Tage-Challenge Starter-Kit als PDF.</p>
+      <form id="artSubscribe" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <input type="email" placeholder="deine@email.de" required style="flex:1; min-width:240px; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; color:#fff;">
+        <button type="submit" style="padding:12px 24px; background:var(--accent); border:none; border-radius:8px; color:#fff; cursor:pointer;">Starter-Kit</button>
+      </form>
+      <div id="msg" style="margin-top:16px; min-height:24px;"></div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container"><p>© 2026 Skalierbar — <a href="../index.html">Start</a> | <a href="../blog.html">Blog</a> | <a href="../produkt.html">Produkt</a></p></div>
+  </footer>
+
+  <script>
+    document.getElementById('artSubscribe').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const email = input.value.trim();
+      const msg = document.getElementById('msg');
+      if (!email || !/^.+@.+\..+$/.test(email)) {
+        msg.innerHTML = '<span style="color:#ff6b6b;">Gültige E-Mail-Adresse eingeben</span>';
+        return;
+      }
+      msg.innerHTML = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&source=article&leadMagnet=7-tage-challenge`
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span style="color:#2ecc71;">✓ Erfolgreich angemeldet! Check dein E-Mail-Postfach für das Starter-Kit.</span>';
+          input.disabled = true;
+        } else {
+          msg.innerHTML = '<span style="color:#ff6b6b;">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span style="color:#ff6b6b;">✗ Netzwerkfehler</span>';
+      }
+    });
+  </script>
+</body>
+</html>

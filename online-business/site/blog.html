@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Online Business Skalieren</title>
+  <meta name="description" content="Artikel über Online Business, passive Einkommen, E-Mail-Marketing, digitale Produkte und Skalierung.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="index.html">Start</a>
+        <a href="blog.html">Blog</a>
+        <a href="produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0; background:none;">
+    <div class="container">
+      <h1 style="font-size:40px;">Blog</h1>
+      <p style="max-width:600px;">Wissen, das dein Online-Geschäft voranbringt. Kein Fluff — nur das, was funktioniert.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="blog-grid" id="blogGrid">
+        <!-- Articles loaded via JS -->
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2026 Skalierbar — <a href="index.html">Start</a> | <a href="blog.html">Blog</a> | <a href="produkt.html">Produkt</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const articles = [
+      { file: 'artikel/01-wie-startet-man-online-geschaeft.html', title: 'Wie startet man ein Online-Geschäft mit weniger als 50$?', excerpt: 'Du willst ein Online-Geschäft aufbauen, hast aber nicht die Mittel für teure Kurse, Werbung oder Inventar? Kein Problem. Mit weniger als 50$ ist ein Start definitiv möglich — wenn du die richtigen Schritte gehst.', tags: ['Start', 'Budget', 'Nische'] },
+      { file: 'artikel/02-die-groessten-fehler.html', title: 'Die 5 größten Fehler bei der Geschäftsaufbau im Jahr 2026', excerpt: 'Jedes Jahr starten Millionen von Menschen ein Online-Geschäft. Die meisten scheitern nicht, weil das Konzept schlecht ist — sondern weil sie die gleichen 5 Fehler immer wieder machen.', tags: ['Fehler', 'Mindset', 'Strategie'] },
+      { file: 'artikel/03-passives-einkommen.html', title: 'Passives Einkommen: Realistische Erwartungen vs. Mythen', excerpt: '"Passives Einkommen" wird oft als der heilige Gral präsentiert: Setze einmal auf, verdiene für immer. Die Realität ist weniger magisch — aber immer noch real.', tags: ['Passiv', 'Realität', 'Mythen'] },
+      { file: 'artikel/04-email-marketing.html', title: 'E-Mail-Marketing: Warum deine Liste dein wertvollstes Asset ist', excerpt: 'Du kennst das: Social Media ist free, aber die Algorithmen ändern sich. Einmal sind deine Beiträge zu sehen, das nächste Mal sind sie verschluckt. E-Mails sind anders.', tags: ['E-Mail', 'Asset', 'Marketing'] },
+      { file: 'artikel/05-digitale-produkte.html', title: 'Digitale Produkte: Warum sie die beste Margin haben', excerpt: 'Wenn du ein Online-Geschäft aufbauen willst, das skalierbar ist, brauchst du digitale Produkte. Warum? Weil die Margen unschlagbar sind.', tags: ['Produkt', 'Margin', 'Skalierung'] },
+      { file: 'artikel/06-email-liste-30-tage.html', title: 'Wie man eine E-Mail-Liste in 30 Tagen auf 1000 Abonnenten aufbaut', excerpt: 'Eine E-Mail-Liste von 1.000 Abonnenten ist der Unterschied zwischen "ich probiere mal" und "ich habe ein Geschäft". Hier ist der Plan.', tags: ['E-Mail', 'Wachstum', 'Plan'] },
+      { file: 'artikel/07-umsatz-vs-gewinn.html', title: 'Der Unterschied zwischen Umsatz und Gewinn — und warum das wichtig ist', excerpt: 'Viele Anfänger denken: "Mehr Umsatz = mehr Geld." Das ist falsch. Umsatz ist die Summe, die durch die Tür kommt. Gewinn ist, was übrig bleibt.', tags: ['Umsatz', 'Gewinn', 'Zahlen'] },
+      { file: 'artikel/08-skalierung.html', title: 'Skalierung: Wenn dein erstes Geschäft läuft, was machst du dann?', excerpt: 'Du hast dein erstes Produkt verkauft. Herzlichen Glückwunsch. Jetzt kommt die Frage: Wie geht es weiter?', tags: ['Skalierung', 'Wachstum', 'Strategie'] },
+      { file: 'artikel/09-content-marketing-anfaenger.html', title: 'Content-Marketing für Anfänger: Der einfachste Weg zu Traffic', excerpt: 'Content-Marketing klingt kompliziert. Es ist es nicht. Content-Marketing ist: Werte für dein Publikum erstellen, um Vertrauen aufzubauen — und dann verkaufen.', tags: ['Content', 'Traffic', 'Anfänger'] },
+      { file: 'artikel/10-7-tage-challenge.html', title: 'Die 7-Tage-Challenge: Von 0$ auf dein erstes Online-Einkommen', excerpt: 'Du willst ein Online-Geschäft starten, aber weißt nicht, wo du anfangen sollst? Hier ist die Challenge. 7 Tage. Jeden Tag eine klare Aufgabe.', tags: ['Challenge', 'Start', 'Plan'] },
+    ];
+
+    const grid = document.getElementById('blogGrid');
+    articles.forEach(a => {
+      const card = document.createElement('article');
+      card.className = 'blog-card';
+      card.innerHTML = `
+        <span class="tag">${a.tags.join(' · ')}</span>
+        <h3>${a.title}</h3>
+        <p>${a.excerpt}</p>
+        <a href="${a.file}" class="read">Artikel lesen →</a>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

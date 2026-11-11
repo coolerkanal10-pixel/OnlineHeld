@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Content-Marketing für Anfänger: Der einfachste Weg zu Traffic | Skalierbar</title>
+  <meta name="description" content="Content-Marketing ist kein Rätsel. Die 3 Formeln, die funktionieren.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo">Skalier<span>bar</span></div>
+      <nav>
+        <a href="../index.html">Start</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../produkt.html">Produkt</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="padding:60px 0;">
+    <div class="container">
+      <h1 style="font-size:38px;">Content-Marketing für Anfänger: Der einfachste Weg zu Traffic</h1>
+      <p style="color:var(--muted); margin-top:20px;">Content-Marketing ist kein Rätsel. Die 3 Formeln, die funktionieren.</p>
+    </div>
+  </section>
+
+  <article class="container" style="padding:40px 0; max-width:760px;">
+    <p>Content-Marketing klingt kompliziert. Es ist es nicht.</p><p>Content-Marketing ist: Werte für dein Publikum erstellen, um Vertrauen aufzubauen — und dann verkaufen.</p><h2>Der simpleste Content-Plan</h2><h3>Pro Woche: 3 Artikel + 1 E-Mail</h3><ul><li><strong>3 Artikel</strong> à 800-1.200 Wörter, jedes löst ein Problem</li><li><strong>1 E-Mail</strong> an deine Liste mit den wichtigsten Erkenntnissen</li><li><strong>1 Post pro Tag</strong> in Social Media (30 Sekunden pro Post)</li></ul><h3>Jeder Artikel hat:</h3><ol><li>Ein klare Überschrift, die ein Problem benennt</li><li>3-5 Abschnitte mit konkreten Tipps</li><li>Eine CTA (Call-to-Action): "Tritt der Liste bei" oder "Kauf das Produkt"</li></ol><h2>Die 3 Content-Formeln</h2><h3>Formel 1: "Wie man [Problem] löst"</h3><ul><li>Zeige Schritt für Schritt, wie man etwas erreicht</li><li>Beispiel: "Wie man eine E-Mail-Liste in 30 Tagen auf 1000 Abonnenten aufbaut"</li></ul><h3>Formel 2: "Die [X] größten Fehler bei [Thema]"</h3><ul><li>Liste die Fehler auf, die dein Publikum macht</li><li>Beispiel: "Die 5 größten Fehler bei der Geschäftsaufbau"</li></ul><h3>Formel 3: "[X] vs. [Y]: Was ist richtig?"</h3><ul><li>Vergleiche zwei Ansätze und erkläre, warum einer funktioniert</li><li>Beispiel: "Umsatz vs. Gewinn: Was really zählt"</li></ul><h2>Der Schlüssel: Konsistenz</h2><p>Ein Artikel pro Woche ist gut. Drei Artikel pro Woche ist besser. Aber ein Artikel pro Woche, der 52 Wochen lang konsequent erscheint, ist Gold wert. Die Konsistenz schafft Vertrauen und sorgt dafür, dass deine Artikel in Suchmaschinen ranken.</p><p><strong>Tritt unserer E-Mail-Liste bei für dein "Content-Plan" Template.</strong></p>
+    <div style="margin-top:40px; padding:20px; background:var(--card); border:1px solid var(--border); border-radius:12px;">
+      <h3>Kostenloses Starter-Kit</h3>
+      <p>Tritt der E-Mail-Liste bei und erhalte das 7-Tage-Challenge Starter-Kit als PDF.</p>
+      <form id="artSubscribe" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:20px;">
+        <input type="email" placeholder="deine@email.de" required style="flex:1; min-width:240px; padding:12px; background:var(--bg2); border:1px solid var(--border); border-radius:8px; color:#fff;">
+        <button type="submit" style="padding:12px 24px; background:var(--accent); border:none; border-radius:8px; color:#fff; cursor:pointer;">Starter-Kit</button>
+      </form>
+      <div id="msg" style="margin-top:16px; min-height:24px;"></div>
+    </div>
+  </article>
+
+  <footer>
+    <div class="container"><p>© 2026 Skalierbar — <a href="../index.html">Start</a> | <a href="../blog.html">Blog</a> | <a href="../produkt.html">Produkt</a></p></div>
+  </footer>
+
+  <script>
+    document.getElementById('artSubscribe').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input');
+      const email = input.value.trim();
+      const msg = document.getElementById('msg');
+      if (!email || !/^.+@.+\..+$/.test(email)) {
+        msg.innerHTML = '<span style="color:#ff6b6b;">Gültige E-Mail-Adresse eingeben</span>';
+        return;
+      }
+      msg.innerHTML = 'Wird gesendet...';
+      try {
+        const res = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&source=article&leadMagnet=7-tage-challenge`
+        });
+        const data = await res.json();
+        if (res.ok) {
+          msg.innerHTML = '<span style="color:#2ecc71;">✓ Erfolgreich angemeldet! Check dein E-Mail-Postfach für das Starter-Kit.</span>';
+          input.disabled = true;
+        } else {
+          msg.innerHTML = '<span style="color:#ff6b6b;">✗ ' + (data.error || 'Fehler') + '</span>';
+        }
+      } catch {
+        msg.innerHTML = '<span style="color:#ff6b6b;">✗ Netzwerkfehler</span>';
+      }
+    });
+  </script>
+</body>
+</html>
